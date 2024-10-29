@@ -41,3 +41,14 @@ npm create refine-app@latest -- --example starter-vite
 <br/>
 
 [![Open starter-vite example from refine](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/embed/github/refinedev/refine/tree/master/examples/starter-vite?view=preview&theme=dark&codemirror=1)
+
+
+## Installation Guide
+node version 23.0.0
+nvm version 0.40.1
+
+## Terminal Commands
+
+https://refine.dev/tutorial/essentials/data-fetching/updating-data/
+
+npm create refine-app@latest -- --example starter-vite
