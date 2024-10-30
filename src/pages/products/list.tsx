@@ -1,4 +1,4 @@
-import { useTable, useMany } from "@refinedev/core";
+import { useTable, useMany, useNavigation } from "@refinedev/core";
 
 export const ListProducts = () => {
   const {
@@ -9,10 +9,12 @@ export const ListProducts = () => {
     sorters,
     setSorters,
   } = useTable({
-    resource: "protected-products",
     pagination: { current: 1, pageSize: 10 },
     sorters: { initial: [{ field: "id", order: "asc" }] },
+    syncWithLocation: true,
   });
+
+  const { show, edit } = useNavigation();
 
   const { data: categories } = useMany({
     resource: "categories",
@@ -45,19 +47,21 @@ export const ListProducts = () => {
     if (sorter) {
       return sorter.order;
     }
-  }
+  };
 
   const onSort = (field: string) => {
     const sorter = getSorter(field);
     setSorters(
-        sorter === "desc" ? [] : [
-        {
-            field,
-            order: sorter === "asc" ? "desc" : "asc",
-        },
-        ]
+      sorter === "desc"
+        ? []
+        : [
+            {
+              field,
+              order: sorter === "asc" ? "desc" : "asc",
+            },
+          ],
     );
-  }
+  };
 
   const indicator = { asc: "⬆️", desc: "⬇️" };
 
@@ -73,15 +77,14 @@ export const ListProducts = () => {
             <th onClick={() => onSort("name")}>
               Name {indicator[getSorter("name")]}
             </th>
-            <th>
-              Category
-            </th>
+            <th>Category</th>
             <th onClick={() => onSort("material")}>
               Material {indicator[getSorter("material")]}
             </th>
             <th onClick={() => onSort("price")}>
               Price {indicator[getSorter("price")]}
             </th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -98,6 +101,20 @@ export const ListProducts = () => {
               </td>
               <td>{product.material}</td>
               <td>{product.price}</td>
+              <td>
+                <button
+                  type="button"
+                  onClick={() => show("protected-products", product.id)}
+                >
+                  Show
+                </button>
+                <button
+                  type="button"
+                  onClick={() => edit("protected-products", product.id)}
+                >
+                  Edit
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -107,9 +124,13 @@ export const ListProducts = () => {
           {"<"}
         </button>
         <div>
-          {current - 1 > 0 && <span onClick={() => onPage(current - 1)}>{current - 1}</span>}
+          {current - 1 > 0 && (
+            <span onClick={() => onPage(current - 1)}>{current - 1}</span>
+          )}
           <span className="current">{current}</span>
-          {current + 1 < pageCount && <span onClick={() => onPage(current + 1)}>{current + 1}</span>}
+          {current + 1 < pageCount && (
+            <span onClick={() => onPage(current + 1)}>{current + 1}</span>
+          )}
         </div>
         <button type="button" onClick={onNext}>
           {">"}
