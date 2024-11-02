@@ -53,5 +53,18 @@ https://refine.dev/tutorial/essentials/data-fetching/updating-data/
 
 npm create refine-app@latest -- --example starter-vite
 
-
 npm i antd @refinedev/antd
+
+npm i @refinedev/inferencer
+
+npm i @refinedev/cli
+
+npm run refine add resource categories
+
+npm run refine add provider i18n
+
+npm run refine update
+
+npm run refine swizzle
+
+npm run refine devtools init
