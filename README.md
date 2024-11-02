@@ -52,3 +52,6 @@ nvm version 0.40.1
 https://refine.dev/tutorial/essentials/data-fetching/updating-data/
 
 npm create refine-app@latest -- --example starter-vite
+
+
+npm i antd @refinedev/antd

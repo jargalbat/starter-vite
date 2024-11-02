@@ -63,7 +63,12 @@ export const ListProducts = () => {
     );
   };
 
-  const indicator = { asc: "⬆️", desc: "⬇️" };
+  // const indicator = { asc: "⬆️", desc: "⬇️" };
+  const indicator: { asc: string; desc: string; default: string } = {
+    asc: "⬆️",
+    desc: "⬇️",
+    default: "",
+  };
 
   return (
     <div>
@@ -72,30 +77,28 @@ export const ListProducts = () => {
         <thead>
           <tr>
             <th onClick={() => onSort("id")}>
-              ID {indicator[getSorter("id")]}
+              ID {indicator[getSorter("id") ?? "default"]}
             </th>
             <th onClick={() => onSort("name")}>
-              Name {indicator[getSorter("name")]}
+              Name {indicator[getSorter("name") ?? "default"]}
             </th>
-            <th>Category</th>
             <th onClick={() => onSort("material")}>
-              Material {indicator[getSorter("material")]}
+              Material {indicator[getSorter("material") ?? "default"]}
             </th>
             <th onClick={() => onSort("price")}>
-              Price {indicator[getSorter("price")]}
+              Price {indicator[getSorter("price") ?? "default"]}
             </th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {data?.data?.map((product) => (
-            <tr key={product.id}>
-              <td>{product.id}</td>
+            <tr key={product.id ?? "default-id"}>
+              <td>{product.id ?? "N/A"}</td>
               <td>{product.name}</td>
               <td>
                 {
                   categories?.data?.find(
-                    (category) => category.id == product.category?.id,
+                    (category) => category.id === product.category?.id,
                   )?.title
                 }
               </td>
@@ -104,13 +107,17 @@ export const ListProducts = () => {
               <td>
                 <button
                   type="button"
-                  onClick={() => show("protected-products", product.id)}
+                  onClick={() =>
+                    show("protected-products", product.id ?? "default-id")
+                  }
                 >
                   Show
                 </button>
                 <button
                   type="button"
-                  onClick={() => edit("protected-products", product.id)}
+                  onClick={() =>
+                    edit("protected-products", product.id ?? "default-id")
+                  }
                 >
                   Edit
                 </button>
